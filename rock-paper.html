@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rock paper scissor</title>
+	<link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="rockStyle.css">
+	
+
+</head>
+<body>
+	<section>		
+		<header>
+			<h1>Rock, Paper, Scissor, Lizard, Spock!</h1>
+			<h2>Play The Game!</h2>
+		</header>
+	</section>
+		<section>
+			<div class="main">
+				<figure>
+					<h3>Rock</h3>
+					<img src="https://image.flaticon.com/icons/svg/744/744119.svg">
+				</figure>
+				<figcaption>
+					<p>In the old version, rock smashes scissors, period. However, in the new and improved version rock smashes scissors, and rock smashes lizard.</p>
+				</figcaption>
+				<figure>
+					<h3>Paper</h3>
+					<img src="https://image.flaticon.com/icons/svg/1044/1044192.svg" alt="photo of paper">
+				</figure>
+				<figcaption>
+					<p>In the old game paper covers rock. That's about it. Now, in the new game paper covers rock, and paper disproves Spock.</p>
+				</figcaption>
+				<figure>
+					<h3>Scissor</h3>
+					<img src="https://image.flaticon.com/icons/svg/744/744117.svg" alt="photo of scissors">
+				</figure>
+				<figcaption>
+					<p>Scissors cuts paper. Pretty standard rules, Right? Nope! Now scissors cuts paper, and also decapitates (cuts the head off of) lizard.</p>
+				</figcaption>
+				<figure>
+					<h3>Lizard</h3>
+					<img src="https://image.flaticon.com/icons/svg/952/952582.svg">
+				</figure>
+				<figcaption>
+					<p>Hold your hand as if you were holding a sock puppet, with your thumb under all of your other fingers. That is the gesture for lizard. Boom. But what does lizard do? Lizard eats paper and poisons Spock.</p>
+				</figcaption>
+				<figure>
+					<h3>Spock</h3>
+					<img src="https://image.flaticon.com/icons/svg/813/813532.svg">
+				</figure>
+				<figcaption>
+					<p>Last but not least, Spock. Spock can, like every other gesture, beat two other gestures. First, Spock vaporizes rock. Second, Spock smashes scissors.</p>
+				</figcaption>
+			</div>
+	</section>	
+	<section>
+	<div class="gamePlay">
+		<button id="click" type ="button" value="clickme"><a href="#">Play Game!</a></button>
+	</div>
+	</section>	
+	<section>
+		<div class="scoreBoard">
+
+			<div class="scoreBoardTitle">
+				<h3>Scoreboard</h3>
+			</div>
+			<div id="score">
+				<h4>Computer:<span id="cpuScore"></span></h4>
+				<h4> <span id="player">Player</span> Score:<span id="plyrScore"></span></h4>	
+			</div>
+	</section>	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	<script>
+	//============= RESULT OF SCOREBOARD==========================//
+		let playerScore = 0;
+		let computerScore = 0;
+		
+		const scoreBoard = {
+			computer: 0
+		};
+
+
+//================= GETS USER NAME ==================================//
+		const getUserName = () =>{
+			askName = prompt("What is your name?")
+			$("#player").text(`${askName}`)
+
+			if (typeof askName === "string"){
+				return askName
+			}	else {
+				return "Player One"
+			}
+		}
+		
+// ================= ASKS FOR THE CHOICE OF THE USER ========================//
+		const getUserChoice = () =>{
+			askUserChoice = prompt("Choose between Rock, Paper, Scissors, Lizard or Spock").toLowerCase();
+			if(askUserChoice === "rock" || askUserChoice === "paper" || askUserChoice === "scissor" || askUserChoice === "lizard" || askUserChoice === "spock"){
+				return askUserChoice;
+			} else {
+				return `Not a valid choice`;
+			}
+
+		}
+// ================= UPDATES THE SCORE IF THE PLAYER WINS ========================//
+		const youWin = (name) => {
+			scoreBoard[name] = scoreBoard[name] + 1;
+			playerScore = playerScore + 1;
+			return `${name} wins the game!`
+		}
+
+// ==================UPDATES THE SCORE IF THE COMPUTER WINS ==============================================//
+		const computerWins = () =>{
+			scoreBoard['computer'] = scoreBoard['computer'] + 1;
+			computerScore = computerScore + 1;
+			return "Computer Wins The Game!"
+		}
+
+//================= GETS THE RANDOM CHOICE OF THE COMPUTER ==================================//
+		const getComputerChoice = () =>{
+			let getRandomNumber = Math.floor(Math.random() * 5);
+			let number = getRandomNumber;
+			if (number === 0){
+				return "rock";
+			}	else if (number === 1){
+				return "paper";
+			}	else if (number === 2){
+				return "scissor";
+			}	else if (number === 3){
+				return "lizard";
+			}	else if (number === 4){
+				return "spock";
+			}
+		}
+
+		
+
+// ===================== DETERMINES THE WINNER =====================================//
+		const determineWinner = (userChoice, computerChoice, name) => {
+			 if (userChoice === computerChoice){
+				return "The Game Is A Tie!"
+			}
+			if(userChoice === "rock"){
+				if(computerChoice === "scissor" || computerChoice === "lizard"){
+					return youWin(name);
+				} else {
+					return computerWins();
+				}
+			}
+			if (userChoice === "paper"){
+				if(computerChoice === "rock" || computerChoice === "spock"){
+					return  youWin(name);
+				} else {
+					return computerWins();
+
+				}
+			}
+			if (userChoice === "scissor"){
+				if (computerChoice === "paper" || computerChoice === "lizard"){
+					return  youWin(name);
+				}	else {
+					return computerWins();
+
+				}
+			}
+			if (userChoice === "lizard"){
+				if(computerChoice === "paper" || computerChoice === "spock"){
+					return  youWin(name);
+				} 	else {
+					return computerWins();
+
+				}
+			}
+			if (userChoice === "spock"){
+				if (computerChoice === "rock" || computerChoice === "scissor"){
+					return  youWin(name);
+				}	else {
+					return computerWins();
+
+				}
+			}
+		}
+
+// =======================ACTIVATES THE GAME ===========================================//
+		const playGame = () =>{
+			let name = getUserName();
+			if (!scoreBoard[name]) {
+				scoreBoard[name] = 0;
+			}
+			
+			let userChoice = getUserChoice();
+			alert(`${name} Picked : ${userChoice}`);
+			let computerChoice = getComputerChoice();
+			alert(`Computer Picked : ${computerChoice}`);
+			alert(determineWinner(userChoice, computerChoice, name));
+			console.log(scoreBoard)
+			console.log(` Shahyn: ${playerScore}, Computer: ${computerScore}`);
+		}
+
+	
+		$("#click").on("click", function(e){
+			e.preventDefault();
+
+			
+			playGame();
+				
+			$("#cpuScore").text(`${computerScore}`);		
+			$("#plyrScore").text(`${playerScore}`);
+		
+		})	
+
+	</script>
+	
+
+</body>
+</html>
+
+
